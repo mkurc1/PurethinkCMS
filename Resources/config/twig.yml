@@ -1,0 +1,14 @@
+services:
+    app.twig.site_extension:
+        class: Purethink\CMSBundle\Twig\SiteExtension
+        arguments: ['@doctrine.orm.entity_manager']
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    app.twig.media_extension:
+        class: Purethink\CMSBundle\Twig\MediaExtension
+        arguments: ['@kernel', '@sonata.media.twig.extension']
+        public: false
+        tags:
+            - { name: twig.extension }

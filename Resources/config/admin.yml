@@ -1,0 +1,96 @@
+parameters:
+    app.menu.classess:
+        Article: Purethink\CMSBundle\Entity\MenuArticle
+        Url: Purethink\CMSBundle\Entity\MenuUrl
+        Action: Purethink\CMSBundle\Entity\MenuAction
+
+services:
+    app.admin.language:
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: CMS, label: "admin.sidebar.language" }
+        class: Purethink\CMSBundle\Admin\LanguageAdmin
+        arguments: [null, Purethink\CMSBundle\Entity\Language, SonataAdminBundle:CRUD]
+
+    app.admin.tag:
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: CMS, label: "admin.sidebar.tag" }
+        class: Purethink\CMSBundle\Admin\TagAdmin
+        arguments: [null, Purethink\CMSBundle\Entity\Tag, SonataAdminBundle:CRUD]
+
+    app.admin.site:
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: CMS, label: "admin.sidebar.site" }
+        class: Purethink\CMSBundle\Admin\SiteAdmin
+        arguments: [null, Purethink\CMSBundle\Entity\Site, 'PurethinkCMSBundle:Admin\SiteAdmin']
+        calls:
+            - [ setLanguageService, ['@app.language_service'] ]
+
+    app.admin.article:
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: CMS, label: "admin.sidebar.artice" }
+        class: Purethink\CMSBundle\Admin\ArticleAdmin
+        arguments: [null, Purethink\CMSBundle\Entity\Article, SonataAdminBundle:CRUD]
+        calls:
+            - [ setSecurityContext, ['@security.context'] ]
+            - [ setLanguageService, ['@app.language_service'] ]
+
+    app.admin.menu_type:
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: CMS, label: "admin.sidebar.menu" }
+        class: Purethink\CMSBundle\Admin\MenuTypeAdmin
+        arguments: [null, Purethink\CMSBundle\Entity\MenuType, SonataAdminBundle:CRUD]
+        calls:
+            - [ addChild, ['@app.admin.menu'] ]
+
+    app.admin.menu:
+        tags:
+            - { name: sonata.admin, manager_type: orm, show_in_dashboard: false }
+        class: Purethink\CMSBundle\Admin\MenuAdmin
+        arguments: [null, Purethink\CMSBundle\Entity\Menu, SonataAdminBundle:CRUD]
+        calls:
+            - [ setLanguageService, ['@app.language_service'] ]
+            - [ setAvailableRoute, ['@app.available_route'] ]
+            - [ setSubClasses, ['%app.menu.classess%'] ]
+
+    app.admin.extension:
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: CMS, label: "admin.sidebar.extension" }
+        class: Purethink\CMSBundle\Admin\ExtensionAdmin
+        arguments: [null, Purethink\CMSBundle\Entity\Extension, SonataAdminBundle:CRUD]
+
+    app.admin.extension_has_field:
+        tags:
+            - { name: sonata.admin, manager_type: orm, show_in_dashboard: false }
+        class: Purethink\CMSBundle\Admin\ExtensionHasFieldAdmin
+        arguments: [null, Purethink\CMSBundle\Entity\ExtensionHasField, SonataAdminBundle:CRUD]
+
+    app.admin.component:
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: CMS, label: "admin.sidebar.component" }
+        class: Purethink\CMSBundle\Admin\ComponentAdmin
+        arguments: [null, Purethink\CMSBundle\Entity\Component, SonataAdminBundle:CRUD]
+        calls:
+            - [ addChild, ['@app.admin.component_has_element'] ]
+            - [ setLanguageService, ['@app.language_service'] ]
+
+    app.admin.component_has_element:
+        tags:
+            - { name: sonata.admin, manager_type: orm, show_in_dashboard: false }
+        class: Purethink\CMSBundle\Admin\ComponentHasElementAdmin
+        arguments: [null, Purethink\CMSBundle\Entity\ComponentHasElement, 'PurethinkCMSBundle:Admin\ComponentHasElementAdmin']
+        calls:
+            - [ addChild, ['@app.admin.component_has_value'] ]
+            - [ setContainer, ['@service_container'] ]
+            - [ setPositionService, ['@pix_sortable_behavior.position']]
+
+    app.admin.component_has_value:
+        tags:
+            - { name: sonata.admin, manager_type: orm, show_in_dashboard: false }
+        class: Purethink\CMSBundle\Admin\ComponentHasValueAdmin
+        arguments: [null, Purethink\CMSBundle\Entity\ComponentHasValue, SonataAdminBundle:CRUD]
+
+    app.admin.contact:
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Contact, label: "admin.sidebar.contact" }
+        class: Purethink\CMSBundle\Admin\ContactAdmin
+        arguments: [null, Purethink\CMSBundle\Entity\Contact, SonataAdminBundle:CRUD]

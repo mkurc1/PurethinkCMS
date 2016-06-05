@@ -1,5 +1,5 @@
 {
-    "name": "mkurc1/PurethinkCMSBundle",
+    "name": "mkurc1/purethink-cms-bundle",
     "license": "MIT",
     "type": "symfony-bundle",
     "description": "Symfony CMSBundle",

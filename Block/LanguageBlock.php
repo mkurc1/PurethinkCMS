@@ -26,7 +26,7 @@ class LanguageBlock extends AbstractBlock
     public function setDefaultSettings(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'template' => ':Block:language.html.twig'
+            'template' => 'PurethinkCMSBundle:Block:language.html.twig'
         ]);
     }
 

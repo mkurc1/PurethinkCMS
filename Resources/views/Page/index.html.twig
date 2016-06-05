@@ -1,0 +1,13 @@
+{% extends "PurethinkCMSBundle:Page:layout.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+
+    {{ sonata_block_render({ "type": 'app.block.component', 'settings': {'slug': 'baner', 'template': 'PurethinkCMSBundle:Page:_banner.html.twig'}}) }}
+
+    {% include 'PurethinkCMSBundle:Page:_news_container.html.twig' %}
+
+    {{ sonata_block_render({ "type": 'app.block.component', 'settings': {'template': 'PurethinkCMSBundle:Page:_link.html.twig', 'slug': 'linki'} }) }}
+
+    {% include 'PurethinkCMSBundle:Page:_footer.html.twig' %}
+{% endblock body %}

@@ -26,7 +26,7 @@ class PageController extends Controller
         /** @var Site $meta */
         $meta = $this->getMetadataByLocale($request->getLocale());
 
-        return $this->render(':Page:index.html.twig', compact('meta'));
+        return $this->render('PurethinkCMSBundle:Page:index.html.twig', compact('meta'));
     }
 
     /**
@@ -49,7 +49,7 @@ class PageController extends Controller
             $entities = null;
         }
 
-        return $this->render(':Page:searchList.html.twig', compact('meta', 'entities'));
+        return $this->render('PurethinkCMSBundle:Page:searchList.html.twig', compact('meta', 'entities'));
     }
 
     /**
@@ -90,7 +90,7 @@ class PageController extends Controller
                 'msg'  => 'Please fill out all fields'
             ]);
         } else {
-            return $this->render(':Page:contact.html.twig', [
+            return $this->render('PurethinkCMSBundle:Page:contact.html.twig', [
                 'meta' => $meta,
                 'form' => $form->createView()
             ]);
@@ -119,7 +119,7 @@ class PageController extends Controller
     {
         $this->getDoctrine()->getRepository('PurethinkCMSBundle:ArticleView')->incrementViews($article->getViews());
 
-        return $this->render(':Page:article.html.twig', compact('article'));
+        return $this->render('PurethinkCMSBundle:Page:article.html.twig', compact('article'));
     }
 
     /**

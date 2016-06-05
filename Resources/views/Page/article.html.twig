@@ -1,0 +1,24 @@
+{% extends "PurethinkCMSBundle:Page:layout.html.twig" %}
+
+{% set meta = article %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div id="article">
+        <div class="container">
+            <div class="article">
+                <div class="page-header">
+                    <h3>{{ article.name }}</h3>
+                    <h5 class="datetime">{{ article.createdAt|format_datetime('dd MMM Y HH:mm') }}</h5>
+                </div>
+
+                {{ article.content|raw }}
+            </div>
+        </div>
+    </div>
+
+    {{ sonata_block_render({ "type": 'app.block.component', 'settings': {'template': 'PurethinkCMSBundle:Page:_link.html.twig', 'slug': 'linki'} }) }}
+
+    {% include 'PurethinkCMSBundle:Page:_footer.html.twig' %}
+{% endblock body %}

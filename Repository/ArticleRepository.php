@@ -3,6 +3,7 @@
 namespace Purethink\CMSBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Purethink\CMSBundle\Entity\Article;
 
 class ArticleRepository extends EntityRepository
 {
@@ -28,6 +29,28 @@ class ArticleRepository extends EntityRepository
             ->where('a.published = true')
             ->andWhere('t.slug = :slug')
             ->setParameter('slug', $slug)
+            ->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    public function prevArticle(Article $article)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.createdAt < :createdAt')
+            ->orderBy('a.createdAt', 'DESC')
+            ->setParameter('createdAt', $article->getCreatedAt())
+            ->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    public function nextArticle(Article $article)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.createdAt > :createdAt')
+            ->orderBy('a.createdAt')
+            ->setParameter('createdAt', $article->getCreatedAt())
             ->setMaxResults(1);
 
         return $qb->getQuery()->getOneOrNullResult();

@@ -42,8 +42,7 @@ class PageController extends Controller
         $meta = $this->getMetadataByLocale($locale);
 
         if ($search = $request->query->get('query')) {
-            $entities = $this->getDoctrine()
-                ->getRepository('PurethinkCMSBundle:Article')
+            $entities = $this->getArticleRepository()
                 ->searchResults($locale, $search);
         } else {
             $entities = null;
@@ -117,9 +116,16 @@ class PageController extends Controller
      */
     public function articleAction(Article $article)
     {
-        $this->getDoctrine()->getRepository('PurethinkCMSBundle:ArticleView')->incrementViews($article->getViews());
+        $this->getDoctrine()->getRepository('PurethinkCMSBundle:ArticleView')
+            ->incrementViews($article->getViews());
 
-        return $this->render('PurethinkCMSBundle:Page:article.html.twig', compact('article'));
+        /** @var Article $prevArticle */
+        $prevArticle = $this->getArticleRepository()->prevArticle($article);
+        /** @var Article $nextArticle */
+        $nextArticle = $this->getArticleRepository()->nextArticle($article);
+
+        return $this->render('PurethinkCMSBundle:Page:article.html.twig',
+            compact('article', 'prevArticle', 'nextArticle'));
     }
 
     /**
@@ -131,5 +137,10 @@ class PageController extends Controller
         return $this->getDoctrine()
             ->getRepository('PurethinkCMSBundle:Site')
             ->getSiteByLocale($locale);
+    }
+
+    private function getArticleRepository()
+    {
+        return $this->getDoctrine()->getRepository('PurethinkCMSBundle:Article');
     }
 }

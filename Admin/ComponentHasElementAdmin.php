@@ -132,7 +132,7 @@ class ComponentHasElementAdmin extends Admin
             ->add('_action', 'actions', [
                 'label'   => 'admin.actions',
                 'actions' => [
-                    'move' => ['template' => ':Admin:_sort.html.twig'],
+                    'move' => ['template' => 'PurethinkCMSBundle:Admin:_sort.html.twig'],
                 ]
             ]);
     }

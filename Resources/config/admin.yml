@@ -3,6 +3,7 @@ parameters:
         Article: Purethink\CMSBundle\Entity\MenuArticle
         Url: Purethink\CMSBundle\Entity\MenuUrl
         Action: Purethink\CMSBundle\Entity\MenuAction
+        Section: Purethink\CMSBundle\Entity\MenuSection
 
 services:
     app.admin.language:

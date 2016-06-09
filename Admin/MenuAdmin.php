@@ -4,6 +4,7 @@ namespace Purethink\CMSBundle\Admin;
 
 use Purethink\CMSBundle\Entity\MenuAction;
 use Purethink\CMSBundle\Entity\MenuArticle;
+use Purethink\CMSBundle\Entity\MenuSection;
 use Purethink\CMSBundle\Entity\MenuUrl;
 use Purethink\CMSBundle\Service\AvailableRoute;
 use Purethink\CMSBundle\Service\Language;
@@ -61,6 +62,13 @@ class MenuAdmin extends Admin
         if ($menu instanceof MenuUrl) {
             $formMapper->add('url', 'url', [
                 'label'    => 'admin.menu.url',
+                'required' => true
+            ]);
+        }
+
+        if ($menu instanceof MenuSection) {
+            $formMapper->add('section', null, [
+                'label'    => 'admin.menu.section',
                 'required' => true
             ]);
         }

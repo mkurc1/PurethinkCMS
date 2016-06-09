@@ -17,7 +17,10 @@ class MenuRepository extends EntityRepository
         $actions = $this->getEntityManager()->getRepository('PurethinkCMSBundle:MenuAction')
             ->getActiveMenus($typeSlug, $locale);
 
-        $menus = array_merge($articles, $urls, $actions);
+        $sections = $this->getEntityManager()->getRepository('PurethinkCMSBundle:MenuSection')
+            ->getActiveMenus($typeSlug, $locale);
+
+        $menus = array_merge($articles, $urls, $actions, $sections);
 
         $qb = $this->createQueryBuilder('a')
             ->addSelect('at')

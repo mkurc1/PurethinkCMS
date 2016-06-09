@@ -26,6 +26,7 @@ abstract class Menu implements SoftDeleteable
     CONST TYPE_OF_ARTICLE = 'Article';
     CONST TYPE_OF_URL = 'Url';
     CONST TYPE_OF_ACTION = 'Action';
+    CONST TYPE_OF_SECTION = 'Section';
 
     use Translatable;
     use SoftDeleteableEntity;

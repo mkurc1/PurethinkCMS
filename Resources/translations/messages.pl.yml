@@ -92,6 +92,7 @@ admin:
         article: Artykuł
         url: Adres URL
         action: Akcja (route)
+        section: Sekcja
         published: Opublikowane
         is_new_page: Otwórz w nowej zakłądce
 

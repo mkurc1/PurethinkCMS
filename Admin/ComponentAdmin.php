@@ -15,7 +15,7 @@ class ComponentAdmin extends Admin
 {
     /** @var Language */
     private $language;
-    
+
     protected $datagridValues = [
         '_sort_by'  => 'name',
         'createdAt' => ['type' => DateType::TYPE_GREATER_THAN],
@@ -51,7 +51,11 @@ class ComponentAdmin extends Admin
                 'locales'        => $this->language->getAvailableLocales(),
                 'fields'         => [
                     'name'        => [
-                        'label' => 'admin.component.name',
+                        'label' => 'admin.component.name'
+                    ],
+                    'description' => [
+                        'field_type' => 'textarea',
+                        'label'      => 'admin.component.description'
                     ]
                 ],
                 'exclude_fields' => ['createdAt', 'updatedAt', 'deletedAt']

@@ -26,6 +26,7 @@ class ComponentHasElementRepository extends EntityRepository
             ];
 
             $entities['title'] = $component->getName();
+            $entities['description'] = $component->getDescription();
 
             /** @var ComponentHasValue $value */
             foreach ($componentHasElement->getComponentHasValues() as $value) {

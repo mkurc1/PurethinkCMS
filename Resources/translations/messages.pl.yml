@@ -51,6 +51,7 @@ admin:
         extension: Rozszerzenie
         language: Języki
         enabled: Aktywne
+        description: Opis
         side_menu:
             component: Komponent
             elements: Elementy

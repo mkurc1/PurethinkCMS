@@ -79,6 +79,20 @@ class Component implements SoftDeleteable
         return null;
     }
 
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        if ($this->getCurrentTranslation()) {
+            return $this->getCurrentTranslation()->getDescription();
+        }
+
+        return null;
+    }
+
     public function __toString()
     {
         if ($this->translations && $this->translations->count()) {

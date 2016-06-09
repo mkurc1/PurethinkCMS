@@ -30,6 +30,14 @@ class ComponentTranslation implements SoftDeleteable, OneLocaleInterface
      */
     protected $name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=2000, nullable=true)
+     * @Assert\Length(max="2000")
+     */
+    protected $description;
+
 
     public function __toString()
     {
@@ -52,5 +60,21 @@ class ComponentTranslation implements SoftDeleteable, OneLocaleInterface
     {
         $this->name = $name;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 }

@@ -27,6 +27,7 @@ class ComponentHasElementRepository extends EntityRepository
 
             $entities['title'] = $component->getName();
             $entities['description'] = $component->getDescription();
+            $entities['media'] = $component->getMedia();
 
             /** @var ComponentHasValue $value */
             foreach ($componentHasElement->getComponentHasValues() as $value) {
@@ -57,10 +58,11 @@ class ComponentHasElementRepository extends EntityRepository
     private function getActiveComponentBySlugAndLocaleQb($slug, $locale)
     {
         return $this->createQueryBuilder('c')
-            ->addSelect('cc, cop, ehf, copt')
+            ->addSelect('cc, cop, ehf, copt, copm')
             ->join('c.componentHasValues', 'cc')
             ->join('cc.extensionHasField', 'ehf')
             ->join('c.component', 'cop')
+            ->leftJoin('cop.media', 'copm')
             ->join('cop.translations', 'copt')
             ->where('cop.enabled = true')
             ->andWhere('c.enabled = true')

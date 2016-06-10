@@ -37,6 +37,12 @@ class Component implements SoftDeleteable
     protected $slug;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Media", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $media;
+
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $enabled = false;
@@ -211,5 +217,23 @@ class Component implements SoftDeleteable
     public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param mixed $media
+     * @return Component
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+        return $this;
     }
 }

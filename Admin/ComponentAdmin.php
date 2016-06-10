@@ -60,6 +60,10 @@ class ComponentAdmin extends Admin
                 ],
                 'exclude_fields' => ['createdAt', 'updatedAt', 'deletedAt']
             ])
+            ->add('media', 'sonata_type_model_list', [
+                'required' => false,
+                'label'    => 'admin.component.media'
+            ])
             ->add('extension', null, [
                 'label' => 'admin.component.extension'
             ])

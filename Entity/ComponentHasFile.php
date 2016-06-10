@@ -12,7 +12,7 @@ class ComponentHasFile extends ComponentHasValue
 {
     /**
      * @ORM\ManyToOne(targetEntity="Media", cascade={"persist"}, fetch="EAGER")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $file;
 

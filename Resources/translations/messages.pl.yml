@@ -52,6 +52,7 @@ admin:
         language: Języki
         enabled: Aktywne
         description: Opis
+        media: Media
         side_menu:
             component: Komponent
             elements: Elementy

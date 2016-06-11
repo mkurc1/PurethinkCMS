@@ -50,6 +50,27 @@ abstract class ComponentHasValue implements SoftDeleteable
         return (string)$this->getStringContent();
     }
 
+    public static function getComponentHasValueType(ComponentHasElement $entity, ExtensionHasField $field)
+    {
+        switch ($field->getTypeOfField()) {
+            case ExtensionHasField::TYPE_BOOLEAN:
+                return new ComponentHasBoolean($entity, $field);
+                break;
+            case ExtensionHasField::TYPE_ARTICLE:
+                return new ComponentHasArticle($entity, $field);
+                break;
+            case ExtensionHasField::TYPE_FILE:
+                return new ComponentHasFile($entity, $field);
+                break;
+            case ExtensionHasField::TYPE_DATE:
+            case ExtensionHasField::TYPE_DATETIME:
+                return new ComponentHasDate($entity, $field);
+                break;
+            default:
+                return new ComponentHasText($entity, $field);
+        }
+    }
+    
     public function __construct(ComponentHasElement $componentHasElement = null, ExtensionHasField $extensionHasField = null)
     {
         $this->setComponentHasElement($componentHasElement);

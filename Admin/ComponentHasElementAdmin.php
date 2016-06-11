@@ -6,6 +6,7 @@ use Purethink\CMSBundle\Entity\ComponentHasBoolean;
 use Purethink\CMSBundle\Entity\ComponentHasDate;
 use Purethink\CMSBundle\Entity\ComponentHasFile;
 use Purethink\CMSBundle\Entity\ComponentHasText;
+use Purethink\CMSBundle\Entity\ComponentHasValue;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -145,32 +146,11 @@ class ComponentHasElementAdmin extends Admin
 
         $fields = $element->getComponent()->getExtension()->getFields();
         foreach ($fields as $field) {
-            $componentHasValue = $this->getComponentHasValueType($element, $field);
+            $componentHasValue = ComponentHasValue::getComponentHasValueType($element, $field);
             $element->addComponentHasValue($componentHasValue);
         }
 
         return $element;
-    }
-
-    private function getComponentHasValueType(ComponentHasElement $entity, ExtensionHasField $field)
-    {
-        switch ($field->getTypeOfField()) {
-            case ExtensionHasField::TYPE_BOOLEAN:
-                return new ComponentHasBoolean($entity, $field);
-                break;
-            case ExtensionHasField::TYPE_ARTICLE:
-                return new ComponentHasArticle($entity, $field);
-                break;
-            case ExtensionHasField::TYPE_FILE:
-                return new ComponentHasFile($entity, $field);
-                break;
-            case ExtensionHasField::TYPE_DATE:
-            case ExtensionHasField::TYPE_DATETIME:
-                return new ComponentHasDate($entity, $field);
-                break;
-            default:
-                return new ComponentHasText($entity, $field);
-        }
     }
 
     protected function getParentObject()

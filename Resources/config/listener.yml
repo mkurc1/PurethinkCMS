@@ -10,3 +10,10 @@ services:
         public: false
         tags:
             - { name: doctrine.event_listener, event: prePersist }
+
+    app.event.extension_has_field:
+        class: Purethink\CMSBundle\EventListener\ExtensionHasFieldListener
+        public: false
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postFlush }

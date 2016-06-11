@@ -36,6 +36,8 @@ class Extension implements SoftDeleteable
     private $name;
 
     /**
+     * @var ArrayCollection
+     * 
      * @ORM\OneToMany(targetEntity="ExtensionHasField", mappedBy="extension", cascade={"persist"}, orphanRemoval=true)
      * @ORM\OrderBy({"position" = "ASC"})
      */
@@ -109,7 +111,6 @@ class Extension implements SoftDeleteable
     public function addField(ExtensionHasField $fields)
     {
         $fields->setExtension($this);
-
         $this->fields[] = $fields;
 
         return $this;

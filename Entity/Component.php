@@ -43,9 +43,9 @@ class Component implements SoftDeleteable
     protected $media;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    protected $enabled = false;
+    protected $enabled = true;
 
     /**
      * @ORM\ManyToOne(targetEntity="Extension", inversedBy="components")

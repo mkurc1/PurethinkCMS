@@ -27,9 +27,9 @@ class ComponentHasElement implements SoftDeleteable
     private $id;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    private $enabled = false;
+    private $enabled = true;
 
     /**
      * @Gedmo\SortableGroup

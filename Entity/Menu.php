@@ -46,9 +46,9 @@ abstract class Menu implements SoftDeleteable
     protected $position;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    protected $published = false;
+    protected $published = true;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)

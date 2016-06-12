@@ -40,7 +40,7 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
      *
      * @ORM\Column(type="boolean")
      */
-    private $published = false;
+    private $published = true;
 
     /**
      * @var UserInterface

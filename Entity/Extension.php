@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="cms_extension")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Purethink\CMSBundle\Repository\ExtensionRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Extension implements SoftDeleteable

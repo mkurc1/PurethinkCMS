@@ -2,6 +2,7 @@
 
 namespace Purethink\CMSBundle\Admin;
 
+use Purethink\CMSBundle\Repository\ExtensionRepository;
 use Purethink\CMSBundle\Service\Language;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -64,8 +65,12 @@ class ComponentAdmin extends Admin
                 'required' => false,
                 'label'    => 'admin.component.media'
             ])
-            ->add('extension', null, [
-                'label' => 'admin.component.extension'
+            ->add('extension', 'entity', [
+                'class'         => 'PurethinkCMSBundle:Extension',
+                'query_builder' => function (ExtensionRepository $er) {
+                    return $er->getExtensionsQb();
+                },
+                'label'         => 'admin.component.extension'
             ])
             ->add('enabled', null, [
                 'label' => 'admin.component.enabled'

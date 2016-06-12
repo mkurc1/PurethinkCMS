@@ -132,14 +132,14 @@ class PageController extends Controller
      * @param string $locale
      * @return Site
      */
-    private function getMetadataByLocale($locale)
+    protected function getMetadataByLocale($locale)
     {
         return $this->getDoctrine()
             ->getRepository('PurethinkCMSBundle:Site')
             ->getSiteByLocale($locale);
     }
 
-    private function getArticleRepository()
+    protected function getArticleRepository()
     {
         return $this->getDoctrine()->getRepository('PurethinkCMSBundle:Article');
     }

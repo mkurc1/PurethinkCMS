@@ -114,18 +114,22 @@ class PageController extends Controller
      * @Method("GET")
      * @I18nDoctrine
      */
-    public function articleAction(Article $article)
+    public function articleAction(Request $request, Article $article)
     {
+        $locale = $request->getLocale();
+        
         $this->getDoctrine()->getRepository('PurethinkCMSBundle:ArticleView')
             ->incrementViews($article->getViews());
 
+        /** @var Site $meta */
+        $meta = $this->getMetadataByLocale($locale);
         /** @var Article $prevArticle */
         $prevArticle = $this->getArticleRepository()->prevArticle($article);
         /** @var Article $nextArticle */
         $nextArticle = $this->getArticleRepository()->nextArticle($article);
 
         return $this->render('PurethinkCMSBundle:Page:article.html.twig',
-            compact('article', 'prevArticle', 'nextArticle'));
+            compact('meta', 'article', 'prevArticle', 'nextArticle'));
     }
 
     /**

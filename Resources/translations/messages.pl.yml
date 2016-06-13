@@ -111,6 +111,7 @@ admin:
         title: Tytuł
         tracking_code: Kod śledzący
         contact_email: Email kontaktowy
+        add_title_to_sub_pages: Dodaj tytuł do podstron
 
     contact:
         name: Imię i nazwisko

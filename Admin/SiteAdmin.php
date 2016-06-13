@@ -61,6 +61,10 @@ class SiteAdmin extends Admin
                     'rows' => 6
                 ]
             ])
+            ->add('addTitleToSubPages', null, [
+                'label'    => 'admin.site.add_title_to_sub_pages',
+                'required' => false
+            ])
             ->end();
     }
 

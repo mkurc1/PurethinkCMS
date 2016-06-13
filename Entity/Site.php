@@ -47,6 +47,13 @@ class Site implements SoftDeleteable, MetadataInterface
      */
     protected $contactEmail;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", name="add_title_to_sub_pages", options={"default"=1})
+     */
+    protected $addTitleToSubPages = true;
+
     protected $translations;
 
 
@@ -118,5 +125,23 @@ class Site implements SoftDeleteable, MetadataInterface
     public function setContactEmail($contactEmail)
     {
         $this->contactEmail = $contactEmail;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isAddTitleToSubPages()
+    {
+        return $this->addTitleToSubPages;
+    }
+
+    /**
+     * @param boolean $addTitleToSubPages
+     * @return Site
+     */
+    public function setAddTitleToSubPages($addTitleToSubPages)
+    {
+        $this->addTitleToSubPages = $addTitleToSubPages;
+        return $this;
     }
 }

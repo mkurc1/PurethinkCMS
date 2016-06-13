@@ -42,6 +42,7 @@ admin:
         published: Opublikowany
         content: Treść
         excerpt: Fragment
+        media: Media
         gallery: Galeria
         tags: Tagi
 

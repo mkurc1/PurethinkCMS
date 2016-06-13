@@ -64,6 +64,10 @@ class ArticleAdmin extends Admin
             ])
             ->end()
             ->with('admin.options', ['class' => 'col-md-4'])
+            ->add('media', 'sonata_type_model_list', [
+                'required' => false,
+                'label'    => 'admin.article.media'
+            ])
             ->add('gallery', 'sonata_type_model_list', [
                 'label'    => 'admin.article.gallery',
                 'required' => false

@@ -33,14 +33,14 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $published = true;
+    protected $published = true;
 
     /**
      * @var UserInterface
@@ -48,7 +48,7 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      */
-    private $user;
+    protected $user;
 
     /**
      * @var ArticleViewInterface
@@ -56,12 +56,22 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
      * @ORM\OneToOne(targetEntity="ArticleView", cascade={"persist"})
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      */
-    private $view;
+    protected $view;
 
     /**
+     * @var ComponentHasArticle
+     *
      * @ORM\OneToMany(targetEntity="ComponentHasArticle", mappedBy="article")
      */
-    private $componentHasArticle;
+    protected $componentHasArticle;
+
+    /**
+     * @var Media
+     *
+     * @ORM\ManyToOne(targetEntity="Media", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $media;
 
     /**
      * @var Gallery
@@ -326,5 +336,23 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * @return Media
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param Media $media
+     * @return Article
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+        return $this;
     }
 }

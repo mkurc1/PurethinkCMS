@@ -17,3 +17,10 @@ services:
         tags:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: doctrine.event_listener, event: postFlush }
+
+    app.event.contact:
+        class: Purethink\CMSBundle\EventListener\ContactListener
+        arguments: ['@service_container']
+        public: false
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }

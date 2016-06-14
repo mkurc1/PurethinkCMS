@@ -14,7 +14,7 @@ class SiteAdmin extends Admin
 
     protected $formOptions = [
         'cascade_validation' => true,
-        'validation_groups'  => ['site', 'default']
+        'validation_groups'  => ['site', 'Default']
     ];
 
     protected function configureRoutes(RouteCollection $collection)
@@ -53,6 +53,10 @@ class SiteAdmin extends Admin
             ->with('admin.options', ['class' => 'col-md-4'])
             ->add('contactEmail', null, [
                 'label' => 'admin.site.contact_email'
+            ])
+            ->add('sendContactRequestOnEmail', null, [
+                'label'    => 'admin.site.send_contact_request_on_email',
+                'required' => false
             ])
             ->add('trackingCode', 'textarea', [
                 'label'    => 'admin.site.tracking_code',

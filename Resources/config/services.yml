@@ -26,3 +26,7 @@ services:
     app.available_route:
         class: Purethink\CMSBundle\Service\AvailableRoute
         arguments: ['@router']
+
+    app.contact_email:
+        class: Purethink\CMSBundle\Service\ContactEmail
+        arguments: ['@service_container','@doctrine.orm.entity_manager', '@mailer', '@templating']

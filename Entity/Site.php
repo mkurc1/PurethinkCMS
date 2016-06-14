@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
 use A2lix\I18nDoctrineBundle\Doctrine\ORM\Util\Translatable;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Table(name="cms_site")
@@ -54,8 +55,27 @@ class Site implements SoftDeleteable, MetadataInterface
      */
     protected $addTitleToSubPages = true;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", name="send_contact_request_on_email", options={"default"=0})
+     */
+    protected $sendContactRequestOnEmail = false;
+
     protected $translations;
 
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        if ($this->isSendContactRequestOnEmail() && empty($this->getContactEmail())) {
+            $context->buildViolation('This value should not be blank.')
+                ->atPath('contactEmail')
+                ->addViolation();
+        }
+    }
 
     public function __toString()
     {
@@ -142,6 +162,24 @@ class Site implements SoftDeleteable, MetadataInterface
     public function setAddTitleToSubPages($addTitleToSubPages)
     {
         $this->addTitleToSubPages = $addTitleToSubPages;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isSendContactRequestOnEmail()
+    {
+        return $this->sendContactRequestOnEmail;
+    }
+
+    /**
+     * @param boolean $sendContactRequestOnEmail
+     * @return Site
+     */
+    public function setSendContactRequestOnEmail($sendContactRequestOnEmail)
+    {
+        $this->sendContactRequestOnEmail = $sendContactRequestOnEmail;
         return $this;
     }
 }

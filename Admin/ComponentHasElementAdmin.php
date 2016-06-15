@@ -1,18 +1,12 @@
 <?php
 namespace Purethink\CMSBundle\Admin;
 
-use Purethink\CMSBundle\Entity\ComponentHasArticle;
-use Purethink\CMSBundle\Entity\ComponentHasBoolean;
-use Purethink\CMSBundle\Entity\ComponentHasDate;
-use Purethink\CMSBundle\Entity\ComponentHasFile;
-use Purethink\CMSBundle\Entity\ComponentHasText;
 use Purethink\CMSBundle\Entity\ComponentHasValue;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Purethink\CMSBundle\Entity\ComponentHasElement;
-use Purethink\CMSBundle\Entity\ExtensionHasField;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Pix\SortableBehaviorBundle\Services\PositionHandler;

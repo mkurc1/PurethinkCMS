@@ -87,17 +87,29 @@ class Site implements SoftDeleteable, MetadataInterface
 
     public function getTitle()
     {
-        return $this->getCurrentTranslation()->getTitle();
+        if ($this->getCurrentTranslation()) {
+            return $this->getCurrentTranslation()->getTitle();
+        }
+
+        return '';
     }
 
     public function getDescription()
     {
-        return $this->getCurrentTranslation()->getDescription();
+        if ($this->getCurrentTranslation()) {
+            return $this->getCurrentTranslation()->getDescription();
+        }
+
+        return '';
     }
 
     public function getKeyword()
     {
-        return $this->getCurrentTranslation()->getKeyword();
+        if ($this->getCurrentTranslation()) {
+            return $this->getCurrentTranslation()->getKeyword();
+        }
+
+        return '';
     }
 
     public function __construct()

@@ -24,7 +24,11 @@ class ComponentHasText extends ComponentHasValue
      */
     public function getContent()
     {
-        return $this->getCurrentTranslation()->getText();
+        if ($this->getCurrentTranslation()) {
+            return $this->getCurrentTranslation()->getText();
+        }
+
+        return '';
     }
 
     public function getStringContent()

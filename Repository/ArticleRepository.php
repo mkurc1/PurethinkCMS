@@ -38,7 +38,10 @@ class ArticleRepository extends EntityRepository
     public function prevArticle(Article $article)
     {
         $qb = $this->createQueryBuilder('a')
+            ->addSelect('at')
+            ->join('a.translations', 'at')
             ->where('a.createdAt < :createdAt')
+            ->andWhere('at.slug IS NOT NULL')
             ->orderBy('a.createdAt', 'DESC')
             ->setParameter('createdAt', $article->getCreatedAt())
             ->setMaxResults(1);
@@ -49,7 +52,10 @@ class ArticleRepository extends EntityRepository
     public function nextArticle(Article $article)
     {
         $qb = $this->createQueryBuilder('a')
+            ->addSelect('at')
+            ->join('a.translations', 'at')
             ->where('a.createdAt > :createdAt')
+            ->andWhere('at.slug IS NOT NULL')
             ->orderBy('a.createdAt')
             ->setParameter('createdAt', $article->getCreatedAt())
             ->setMaxResults(1);

@@ -3,6 +3,7 @@
 namespace Purethink\CMSBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Purethink\CMSBundle\Entity\Article;
 use Purethink\CMSBundle\Entity\ComponentHasElement;
 use Purethink\CMSBundle\Entity\ComponentHasValue;
 
@@ -35,6 +36,8 @@ class ComponentHasElementRepository extends EntityRepository
                 $content = $value->getContent();
 
                 if ($isRequired && null == $content) {
+                    $validItem = false;
+                } elseif ($content instanceof Article && empty($content->getSlug())) {
                     $validItem = false;
                 } else {
                     $slug = $value->getExtensionHasField()->getSlug();

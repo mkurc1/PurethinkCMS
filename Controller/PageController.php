@@ -2,7 +2,6 @@
 
 namespace Purethink\CMSBundle\Controller;
 
-use A2lix\I18nDoctrineBundle\Annotation\I18nDoctrine;
 use Purethink\CMSBundle\Entity\Article;
 use Purethink\CMSBundle\Entity\Contact;
 use Purethink\CMSBundle\Form\Type\ContactFormType;
@@ -19,12 +18,11 @@ class PageController extends Controller
     /**
      * @Route("", name="page")
      * @Method("GET")
-     * @I18nDoctrine
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         /** @var Site $meta */
-        $meta = $this->getMetadataByLocale($request->getLocale());
+        $meta = $this->getMetadata();
 
         return $this->render('PurethinkCMSBundle:Page:index.html.twig', compact('meta'));
     }
@@ -32,14 +30,13 @@ class PageController extends Controller
     /**
      * @Route("/search")
      * @Method("GET")
-     * @I18nDoctrine
      */
     public function searchListAction(Request $request)
     {
         $locale = $request->getLocale();
 
         /** @var Site $meta */
-        $meta = $this->getMetadataByLocale($locale);
+        $meta = $this->getMetadata();
 
         if ($search = $request->query->get('query')) {
             $entities = $this->getArticleRepository()
@@ -54,14 +51,11 @@ class PageController extends Controller
     /**
      * @Route("/contact", options={"expose"=true})
      * @Method("GET|POST")
-     * @I18nDoctrine
      */
     public function contactAction(Request $request)
     {
-        $locale = $request->getLocale();
-
         /** @var Site $meta */
-        $meta = $this->getMetadataByLocale($locale);
+        $meta = $this->getMetadata();
 
         $contact = new Contact();
         $form = $this->createForm(new ContactFormType(), $contact);
@@ -112,17 +106,14 @@ class PageController extends Controller
      *     "map_method_signature" = true
      * })
      * @Method("GET")
-     * @I18nDoctrine
      */
-    public function articleAction(Request $request, Article $article)
+    public function articleAction(Article $article)
     {
-        $locale = $request->getLocale();
-        
         $this->getDoctrine()->getRepository('PurethinkCMSBundle:ArticleView')
             ->incrementViews($article->getViews());
 
         /** @var Site $meta */
-        $meta = $this->getMetadataByLocale($locale);
+        $meta = $this->getMetadata();
         /** @var Article $prevArticle */
         $prevArticle = $this->getArticleRepository()->prevArticle($article);
         /** @var Article $nextArticle */
@@ -133,14 +124,13 @@ class PageController extends Controller
     }
 
     /**
-     * @param string $locale
      * @return Site
      */
-    protected function getMetadataByLocale($locale)
+    protected function getMetadata()
     {
         return $this->getDoctrine()
             ->getRepository('PurethinkCMSBundle:Site')
-            ->getSiteByLocale($locale);
+            ->getSite();
     }
 
     protected function getArticleRepository()

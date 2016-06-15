@@ -3,6 +3,7 @@
 namespace Purethink\CMSBundle\Admin;
 
 use Purethink\CMSBundle\Entity\ExtensionHasField;
+use Purethink\CMSBundle\Service\Language;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -10,6 +11,9 @@ use Purethink\CMSBundle\Entity\ComponentHasValue;
 
 class ComponentHasValueAdmin extends Admin
 {
+    /** @var Language */
+    private $language;
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $object = $this->getSubject();
@@ -64,11 +68,35 @@ class ComponentHasValueAdmin extends Admin
                 ]);
                 break;
             case ExtensionHasField::TYPE_WYSIWYG:
-                $formMapper->add('content', 'ckeditor', [
-                    'config_name' => 'default',
-                    'required'    => $field->getRequired(),
-                    'label'       => $field->getLabelOfField(),
-                    'constraints' => $constrains
+                $formMapper->add('translations', 'a2lix_translations', [
+                    'label'          => false,
+                    'locales'        => $this->language->getAvailableLocales(),
+                    'fields'         => [
+                        'text' => [
+                            'field_type'  => 'ckeditor',
+                            'config_name' => 'default',
+                            'required'    => $field->getRequired(),
+                            'constraints' => $constrains,
+                            'label'       => $field->getLabelOfField()
+                        ]
+                    ],
+                    'exclude_fields' => ['createdAt', 'updatedAt', 'deletedAt']
+                ]);
+                break;
+            case ExtensionHasField::TYPE_TEXT:
+            case ExtensionHasField::TYPE_TEXTAREA:
+                $formMapper->add('translations', 'a2lix_translations', [
+                    'label'          => false,
+                    'locales'        => $this->language->getAvailableLocales(),
+                    'fields'         => [
+                        'text' => [
+                            'field_type'  => $field->getTypeOfFieldString(),
+                            'required'    => $field->getRequired(),
+                            'constraints' => $constrains,
+                            'label'       => $field->getLabelOfField()
+                        ]
+                    ],
+                    'exclude_fields' => ['createdAt', 'updatedAt', 'deletedAt']
                 ]);
                 break;
             default:
@@ -78,5 +106,10 @@ class ComponentHasValueAdmin extends Admin
                     'constraints' => $constrains
                 ]);
         }
+    }
+
+    public function setLanguageService(Language $language)
+    {
+        $this->language = $language;
     }
 }

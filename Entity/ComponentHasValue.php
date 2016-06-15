@@ -7,6 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\SoftDeleteable;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use A2lix\I18nDoctrineBundle\Doctrine\ORM\Util\Translatable;
 
 /**
  * @ORM\Table(name="cms_component_has_value")
@@ -16,6 +17,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 abstract class ComponentHasValue implements SoftDeleteable
 {
+    use Translatable;
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
@@ -24,19 +26,21 @@ abstract class ComponentHasValue implements SoftDeleteable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="ComponentHasElement", inversedBy="componentHasValues")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    private $componentHasElement;
+    protected $componentHasElement;
 
     /**
      * @ORM\ManyToOne(targetEntity="ExtensionHasField", inversedBy="fields")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $extensionHasField;
+    protected $extensionHasField;
+
+    protected $translations;
 
 
     abstract public function getContent();
@@ -75,6 +79,9 @@ abstract class ComponentHasValue implements SoftDeleteable
     {
         $this->setComponentHasElement($componentHasElement);
         $this->setExtensionHasField($extensionHasField);
+
+        $this->translations = new ArrayCollection();
+
     }
 
     /**

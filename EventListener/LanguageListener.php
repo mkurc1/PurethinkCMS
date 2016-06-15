@@ -52,6 +52,6 @@ class LanguageListener
 
     private function isAdminUrl($uri)
     {
-        return preg_match('/admin\/app/', $uri);
+        return preg_match('/admin\/purethink/', $uri);
     }
 }

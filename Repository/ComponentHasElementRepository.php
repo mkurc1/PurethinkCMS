@@ -58,8 +58,9 @@ class ComponentHasElementRepository extends EntityRepository
     private function getActiveComponentBySlugAndLocaleQb($slug, $locale)
     {
         return $this->createQueryBuilder('c')
-            ->addSelect('cc, cop, ehf, copt, copm')
+            ->addSelect('cc, cop, ehf, copt, copm, cct')
             ->join('c.componentHasValues', 'cc')
+            ->leftJoin('cc.translations', 'cct')
             ->join('cc.extensionHasField', 'ehf')
             ->join('c.component', 'cop')
             ->leftJoin('cop.media', 'copm')

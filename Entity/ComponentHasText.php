@@ -10,15 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ComponentHasText extends ComponentHasValue
 {
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $text;
-
-
     public function setContent($content)
     {
-        $this->setText($content);
+        $this->getCurrentTranslation()->setText($content);
 
         return $this;
     }
@@ -30,34 +24,11 @@ class ComponentHasText extends ComponentHasValue
      */
     public function getContent()
     {
-        return $this->getText();
+        return $this->getCurrentTranslation()->getText();
     }
 
     public function getStringContent()
     {
         return $this->getContent();
-    }
-
-    /**
-     * Set text
-     *
-     * @param string $text
-     * @return ComponentHasText
-     */
-    public function setText($text)
-    {
-        $this->text = $text;
-
-        return $this;
-    }
-
-    /**
-     * Get text
-     *
-     * @return string 
-     */
-    public function getText()
-    {
-        return $this->text;
     }
 }

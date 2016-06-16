@@ -198,23 +198,3 @@ a2lix_translation_form:
 
 doctrine_migrations:
     table_name: cms_migration_versions
-
-khepin_yaml_fixtures:
-    resources:
-        - PurethinkCMSBundle/user
-        - PurethinkCMSBundle/media
-        - PurethinkCMSBundle/language
-        - PurethinkCMSBundle/article
-        - PurethinkCMSBundle/articleTranslation
-        - PurethinkCMSBundle/extension
-        - PurethinkCMSBundle/extensionHasField
-        - PurethinkCMSBundle/component
-        - PurethinkCMSBundle/componentTranslation
-        - PurethinkCMSBundle/componentHasElement
-        - PurethinkCMSBundle/componentHasText
-        - PurethinkCMSBundle/componentHasArticle
-        - PurethinkCMSBundle/componentHasFile
-        - PurethinkCMSBundle/menuType
-        - PurethinkCMSBundle/menuArticle
-        - PurethinkCMSBundle/menuTranslation
-        - PurethinkCMSBundle

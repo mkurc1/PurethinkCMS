@@ -3,6 +3,7 @@
 namespace Purethink\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Purethink\CoreBundle\Entity\Media;
 
 /**
  * @ORM\Table()
@@ -11,7 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 class ComponentHasFile extends ComponentHasValue
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Media", cascade={"persist"}, fetch="EAGER")
+     * @var Media
+     *
+     * @ORM\ManyToOne(targetEntity="Purethink\CoreBundle\Entity\Media", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumn(nullable=true)
      */
     private $file;

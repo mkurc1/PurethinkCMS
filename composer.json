@@ -33,20 +33,8 @@
         "doctrine/doctrine-fixtures-bundle": "~2.2",
         "doctrine/data-fixtures": "v1.1.1",
         "stof/doctrine-extensions-bundle": "^1.2",
-        "knplabs/knp-paginator-bundle": "~2.4",
-        "knplabs/knp-menu-bundle": "1.1.*",
-        "sonata-project/admin-bundle": "^2.3",
-        "sonata-project/doctrine-orm-admin-bundle": "^2.3",
-        "sonata-project/intl-bundle": "^2.2",
-        "sonata-project/block-bundle": "~2.2",
-        "sonata-project/user-bundle": "^2.2",
-        "sonata-project/media-bundle": "2.3.3",
-        "sonata-project/formatter-bundle": "~2.3",
-        "pixassociates/sortable-behavior-bundle": "0.2.*",
-        "a2lix/translation-form-bundle": "^2.1",
-        "a2lix/i18n-doctrine-bundle": "^0.1.0",
         "doctrine/doctrine-migrations-bundle": "^1.1",
-        "friendsofsymfony/jsrouting-bundle": "^1.6"
+        "mkurc1/purethink-core-bundle" : "dev-master"
     },
     "minimum-stability": "stable"
 }

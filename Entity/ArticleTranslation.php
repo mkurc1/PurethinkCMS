@@ -51,7 +51,6 @@ class ArticleTranslation implements SoftDeleteable, OneLocaleInterface
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank()
      */
     protected $excerpt;
 

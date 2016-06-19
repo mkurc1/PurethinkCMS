@@ -7,6 +7,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\SoftDeleteable;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Purethink\CoreBundle\Entity\Gallery;
+use Purethink\CoreBundle\Entity\Media;
+use Purethink\CoreBundle\Entity\Tag;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -45,7 +48,7 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
     /**
      * @var UserInterface
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="Purethink\CoreBundle\Entity\User")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      */
     protected $user;
@@ -68,7 +71,7 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
     /**
      * @var Media
      *
-     * @ORM\ManyToOne(targetEntity="Media", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Purethink\CoreBundle\Entity\Media", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     protected $media;
@@ -76,7 +79,7 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
     /**
      * @var Gallery
      *
-     * @ORM\ManyToOne(targetEntity="Gallery", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Purethink\CoreBundle\Entity\Gallery", cascade={"persist"})
      * @ORM\OrderBy({"position" = "ASC"})
      */
     protected $gallery;
@@ -84,7 +87,7 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Purethink\CoreBundle\Entity\Tag", cascade={"persist"})
      * @ORM\JoinTable(name="cms_article_has_tag",
      *      joinColumns={@ORM\JoinColumn(name="article_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}

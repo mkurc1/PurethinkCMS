@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\SoftDeleteable;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Purethink\CoreBundle\Entity\Media;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -24,6 +25,8 @@ class Component implements SoftDeleteable
     use SoftDeleteableEntity;
 
     /**
+     * @var integer
+     * 
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -37,7 +40,9 @@ class Component implements SoftDeleteable
     protected $slug;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Media", cascade={"persist"})
+     * @var Media
+     * 
+     * @ORM\ManyToOne(targetEntity="Purethink\CoreBundle\Entity\Media", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     protected $media;

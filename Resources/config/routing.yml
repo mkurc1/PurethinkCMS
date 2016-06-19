@@ -1,26 +1,3 @@
-sonata_user_security:
-    resource: "@SonataUserBundle/Resources/config/routing/sonata_security_1.xml"
-
-media:
-    resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
-    prefix: /media
-
-admin:
-    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
-    prefix: /admin
-
-_sonata_admin:
-    resource: .
-    type: sonata_admin
-    prefix: /admin
-
-sonata_user:
-    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
-    prefix: /admin
-
-fos_js_routing:
-    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
-
 cms:
     resource: "@PurethinkCMSBundle/Controller/"
     type:     annotation

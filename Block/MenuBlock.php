@@ -2,13 +2,13 @@
 
 namespace Purethink\CMSBundle\Block;
 
+use Purethink\CoreBundle\Block\AbstractBlock;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Sonata\BlockBundle\Model\BlockInterface;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -16,9 +16,14 @@ class MenuBlock extends AbstractBlock
 {
     const CACHE_TIME = 0;
 
-    /** @var EntityManager */
+    /**
+     * @var EntityManager
+     */
     private $entityManager;
-    /** @var RequestStack */
+
+    /**
+     * @var RequestStack
+     */
     private $requestStack;
 
     /**
@@ -36,25 +41,14 @@ class MenuBlock extends AbstractBlock
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultSettings(OptionsResolverInterface $resolver)
+    public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'template' => 'PurethinkCMSBundle:Block:menu.html.twig',
             'slug'     => null
         ]);
-    }
-
-    /**
-     * @param BlockInterface $block
-     * @return array|void
-     */
-    public function getCacheKeys(BlockInterface $block)
-    {
-        return [
-            'type' => $this->name
-        ];
     }
 
     /**
@@ -68,9 +62,9 @@ class MenuBlock extends AbstractBlock
         $slug = $blockContext->getSetting('slug');
 
         return $this->renderResponse($blockContext->getTemplate(), [
-                'menu' => $this->getActiveMenu($slug, $locale),
-                'home' => true
-            ],
+            'menu' => $this->getActiveMenu($slug, $locale),
+            'home' => true
+        ],
             $response)->setTtl(self::CACHE_TIME);
     }
 

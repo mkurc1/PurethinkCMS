@@ -3,12 +3,12 @@
 namespace Purethink\CMSBundle\Block;
 
 use Purethink\CMSBundle\Service\Language;
+use Purethink\CoreBundle\Block\AbstractBlock;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Sonata\BlockBundle\Model\BlockInterface;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LanguageBlock extends AbstractBlock
 {
@@ -23,18 +23,14 @@ class LanguageBlock extends AbstractBlock
         $this->language = $language;
     }
 
-    public function setDefaultSettings(OptionsResolverInterface $resolver)
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureSettings(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'template' => 'PurethinkCMSBundle:Block:language.html.twig'
+            'template' => 'PurethinkCMSBundle:Block:language.html.twig',
         ]);
-    }
-
-    public function getCacheKeys(BlockInterface $block)
-    {
-        return [
-            'type' => $this->name
-        ];
     }
 
     public function execute(BlockContextInterface $blockContext, Response $response = null)

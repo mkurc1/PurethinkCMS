@@ -11,7 +11,10 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use A2lix\I18nDoctrineBundle\Doctrine\ORM\Util\Translatable;
 
 /**
- * @ORM\Table(name="cms_component_has_value")
+ * @ORM\Table(name="cms_component_has_value",
+ *   indexes={
+ *     @ORM\Index(columns={"dtype"})
+ *   })
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\Entity()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -23,6 +26,8 @@ abstract class ComponentHasValue implements SoftDeleteable
     use SoftDeleteableEntity;
 
     /**
+     * @var integer
+     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -30,17 +35,24 @@ abstract class ComponentHasValue implements SoftDeleteable
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ComponentHasElement", inversedBy="componentHasValues")
+     * @var ComponentHasElement
+     *
+     * @ORM\ManyToOne(targetEntity="Purethink\CMSBundle\Entity\ComponentHasElement", inversedBy="componentHasValues")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $componentHasElement;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ExtensionHasField", inversedBy="fields")
+     * @var ExtensionHasField
+     *
+     * @ORM\ManyToOne(targetEntity="Purethink\CMSBundle\Entity\ExtensionHasField", inversedBy="fields")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $extensionHasField;
 
+    /**
+     * @var ArrayCollection
+     */
     protected $translations;
 
 

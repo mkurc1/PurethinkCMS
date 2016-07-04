@@ -11,7 +11,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use A2lix\I18nDoctrineBundle\Doctrine\ORM\Util\Translatable;
 
 /**
- * @ORM\Table(name="cms_component_has_value",
+ * @ORM\Table(name="component_has_value",
  *   indexes={
  *     @ORM\Index(columns={"dtype"})
  *   })

@@ -8,7 +8,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Table(name="cms_language")
+ * @ORM\Table(name="language")
  * @ORM\Entity(repositoryClass="Purethink\CMSBundle\Repository\LanguageRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */

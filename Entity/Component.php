@@ -14,7 +14,7 @@ use Purethink\CoreBundle\Entity\Media;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="cms_component")
+ * @ORM\Table(name="component")
  * @ORM\Entity()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */

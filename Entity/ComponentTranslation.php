@@ -12,7 +12,7 @@ use Gedmo\SoftDeleteable\SoftDeleteable;
 use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity
- * @ORM\Table(name="cms_component_translation")
+ * @ORM\Table(name="component_translation")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class ComponentTranslation implements SoftDeleteable, OneLocaleInterface

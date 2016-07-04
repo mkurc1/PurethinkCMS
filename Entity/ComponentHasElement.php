@@ -10,7 +10,7 @@ use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * @ORM\Table(name="cms_component_has_element")
+ * @ORM\Table(name="component_has_element")
  * @ORM\Entity(repositoryClass="Purethink\CMSBundle\Repository\ComponentHasElementRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */

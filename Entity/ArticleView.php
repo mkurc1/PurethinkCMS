@@ -8,7 +8,7 @@ use Gedmo\SoftDeleteable\SoftDeleteable;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 
 /**
- * @ORM\Table(name="cms_article_view")
+ * @ORM\Table(name="article_view")
  * @ORM\Entity(repositoryClass="Purethink\CMSBundle\Repository\ArticleViewRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */

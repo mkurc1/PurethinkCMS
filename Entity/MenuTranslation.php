@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="cms_menu_translation")
+ * @ORM\Table(name="menu_translation")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class MenuTranslation implements SoftDeleteable, OneLocaleInterface

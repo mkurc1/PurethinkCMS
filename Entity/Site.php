@@ -13,7 +13,7 @@ use A2lix\I18nDoctrineBundle\Doctrine\ORM\Util\Translatable;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * @ORM\Table(name="cms_site")
+ * @ORM\Table(name="site")
  * @ORM\Entity(repositoryClass="Purethink\CMSBundle\Repository\SiteRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */

@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * @ORM\Table(name="cms_menu",
+ * @ORM\Table(name="menu",
  *   indexes={
  *     @ORM\Index(columns={"dtype"})
  *   })

@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use A2lix\I18nDoctrineBundle\Doctrine\ORM\Util\Translatable;
 
 /**
- * @ORM\Table(name="cms_article")
+ * @ORM\Table(name="article")
  * @ORM\Entity(repositoryClass="Purethink\CMSBundle\Repository\ArticleRepository")
  * @ORM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
@@ -88,7 +88,7 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Purethink\CoreBundle\Entity\Tag", cascade={"persist"})
-     * @ORM\JoinTable(name="cms_article_has_tag",
+     * @ORM\JoinTable(name="article_has_tag",
      *      joinColumns={@ORM\JoinColumn(name="article_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
      * )

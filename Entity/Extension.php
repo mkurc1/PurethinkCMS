@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Table(name="cms_extension")
+ * @ORM\Table(name="extension")
  * @ORM\Entity(repositoryClass="Purethink\CMSBundle\Repository\ExtensionRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */

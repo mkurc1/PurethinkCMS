@@ -35,6 +35,5 @@
         "stof/doctrine-extensions-bundle": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^1.1",
         "mkurc1/purethink-core-bundle" : "dev-master"
-    },
-    "minimum-stability": "stable"
+    }
 }

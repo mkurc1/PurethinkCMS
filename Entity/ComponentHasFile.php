@@ -15,7 +15,7 @@ class ComponentHasFile extends ComponentHasValue
      * @var Media
      *
      * @ORM\ManyToOne(targetEntity="Purethink\CoreBundle\Entity\Media", cascade={"persist"}, fetch="EAGER")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $file;
 

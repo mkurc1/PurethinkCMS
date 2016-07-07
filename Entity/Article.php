@@ -7,6 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\SoftDeleteable;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Purethink\CoreBundle\Entity\Category;
 use Purethink\CoreBundle\Entity\Gallery;
 use Purethink\CoreBundle\Entity\Media;
 use Purethink\CoreBundle\Entity\Tag;
@@ -95,6 +96,13 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
      * @Assert\Valid()
      */
     protected $tags;
+
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="Purethink\CoreBundle\Entity\Category", cascade={"persist"})
+     */
+    protected $category;
 
     protected $translations;
 
@@ -356,6 +364,24 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
     public function setMedia($media)
     {
         $this->media = $media;
+        return $this;
+    }
+
+    /**
+     * @return Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category $category
+     * @return Article
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
         return $this;
     }
 }

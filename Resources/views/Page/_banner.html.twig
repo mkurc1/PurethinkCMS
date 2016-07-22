@@ -16,7 +16,7 @@
                     {% for banner in entities.entities %}
                         {% set i = i + 1 %}
                         <div class="item {{ (i == 1) ? 'active' : '' }}">
-                            <a href="{{ path('article', { 'slug': banner.adres.slug }) }}">
+                            <a href="{{ path('purethink_cms_article', { 'slug': banner.adres.slug }) }}">
                                 {% if is_media_exist(banner.fotografia, 'banner') %}
                                     <img src="{% path banner.fotografia, 'banner' %}" alt="" />
                                 {% else %}

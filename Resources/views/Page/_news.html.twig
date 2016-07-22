@@ -5,7 +5,7 @@
         {% for news in entities.entities %}
             <div class="media">
                 <div class="media-left">
-                    <a href="{{ path('article', { 'slug': news.adres.slug }) }}">
+                    <a href="{{ path('purethink_cms_article', { 'slug': news.adres.slug }) }}">
                         {% if is_media_exist(news.fotografia, 'news') %}
                             <img src="{% path news.fotografia, 'news' %}" class="media-object" alt="" />
                         {% else %}
@@ -15,7 +15,7 @@
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <a href="{{ path('article', { 'slug': news.adres.slug }) }}">
+                        <a href="{{ path('purethink_cms_article', { 'slug': news.adres.slug }) }}">
                             {{ news.nazwa }}
                         </a>
                         <small class="date">{{ news.created_at | format_datetime('dd MMM Y HH:mm') }}</small>

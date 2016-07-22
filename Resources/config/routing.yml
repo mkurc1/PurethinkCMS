@@ -1,4 +1,26 @@
-cms:
-    resource: "@PurethinkCMSBundle/Controller/"
-    type:     annotation
-    prefix:   /
+purethink_cms_homepage:
+    path: /
+    defaults: { _controller: 'PurethinkCMSBundle:Page:index' }
+    methods: [GET]
+
+purethink_cms_search:
+    path: /search
+    defaults: { _controller: 'PurethinkCMSBundle:Page:searchList' }
+    methods: [GET]
+
+purethink_cms_contact:
+    path: /contact
+    defaults: { _controller: 'PurethinkCMSBundle:Page:contact' }
+    methods: [GET, POST]
+    options:
+        expose: true
+
+purethink_cms_change_locale:
+    path: /change-locale/{_locale}
+    defaults: { _controller: 'PurethinkCMSBundle:Page:changeLocale' }
+    methods: [GET]
+
+purethink_cms_article:
+    path: /{slug}
+    defaults: { _controller: 'PurethinkCMSBundle:Page:article' }
+    methods: [GET]

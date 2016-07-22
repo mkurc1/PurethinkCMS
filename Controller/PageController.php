@@ -5,20 +5,13 @@ namespace Purethink\CMSBundle\Controller;
 use Purethink\CMSBundle\Entity\Article;
 use Purethink\CMSBundle\Entity\Contact;
 use Purethink\CMSBundle\Form\Type\ContactFormType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Purethink\CMSBundle\Entity\Site;
 
 class PageController extends Controller
 {
-    /**
-     * @Route("", name="page")
-     * @Method("GET")
-     */
     public function indexAction()
     {
         /** @var Site $meta */
@@ -27,10 +20,6 @@ class PageController extends Controller
         return $this->render('PurethinkCMSBundle:Page:index.html.twig', compact('meta'));
     }
 
-    /**
-     * @Route("/search")
-     * @Method("GET")
-     */
     public function searchListAction(Request $request)
     {
         $locale = $request->getLocale();
@@ -48,10 +37,6 @@ class PageController extends Controller
         return $this->render('PurethinkCMSBundle:Page:searchList.html.twig', compact('meta', 'entities'));
     }
 
-    /**
-     * @Route("/contact", options={"expose"=true})
-     * @Method("GET|POST")
-     */
     public function contactAction(Request $request)
     {
         /** @var Site $meta */
@@ -73,7 +58,7 @@ class PageController extends Controller
             } else {
                 $this->addFlash('success', 'flash.contact.success');
 
-                return $this->redirectToRoute('purethink_cms_page_contact');
+                return $this->redirectToRoute('purethink_cms_contact');
             }
         }
 
@@ -90,25 +75,18 @@ class PageController extends Controller
         }
     }
 
-    /**
-     * @Route("/change-locale/{_locale}", name="change_locale")
-     * @Method("GET")
-     */
     public function changeLocaleAction()
     {
-        return $this->redirectToRoute('page');
+        return $this->redirectToRoute('purethink_cms_homepage');
     }
 
-    /**
-     * @Route("/{slug}", name="article")
-     * @ParamConverter("article", class="PurethinkCMSBundle:Article", options={
-     *     "repository_method" = "articleBySlug",
-     *     "map_method_signature" = true
-     * })
-     * @Method("GET")
-     */
-    public function articleAction(Article $article)
+    public function articleAction($slug = null)
     {
+        $article = $this->getArticleRepository()->articleBySlug($slug);
+        if (!$article) {
+            return $this->createNotFoundException();
+        }
+
         $this->getDoctrine()->getRepository('PurethinkCMSBundle:ArticleView')
             ->incrementViews($article->getViews());
 

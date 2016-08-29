@@ -58,7 +58,7 @@ class ExtensionHasField implements SoftDeleteable
     private $name;
 
     /**
-     * @Gedmo\Slug(fields={"name"}, unique=false)
+     * @Gedmo\Slug(fields={"name"}, unique=false, separator="_")
      * @ORM\Column(length=255, unique=false)
      */
     private $slug;

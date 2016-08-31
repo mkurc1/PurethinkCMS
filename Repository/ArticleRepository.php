@@ -32,6 +32,8 @@ class ArticleRepository extends EntityRepository
             ->setParameter('slug', $slug)
             ->setMaxResults(1);
 
+        $this->getEntityManager()->getFilters()->disable('oneLocale');
+
         return $qb->getQuery()->getOneOrNullResult();
     }
 

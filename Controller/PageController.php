@@ -84,7 +84,7 @@ class PageController extends Controller
     {
         $article = $this->getArticleRepository()->articleBySlug($slug);
         if (!$article) {
-            return $this->createNotFoundException();
+            throw $this->createNotFoundException();
         }
 
         $this->getDoctrine()->getRepository('PurethinkCMSBundle:ArticleView')

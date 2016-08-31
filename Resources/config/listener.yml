@@ -3,7 +3,7 @@ services:
         class: Purethink\CMSBundle\EventListener\LanguageListener
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: setLocale }
-        arguments: ['@app.language_service']
+        arguments: ['@service_container']
 
     app.event.component:
         class: Purethink\CMSBundle\EventListener\ComponentListener

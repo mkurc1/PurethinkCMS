@@ -2,31 +2,24 @@
 
 namespace Purethink\CMSBundle\EventListener;
 
-use Purethink\CMSBundle\Service\Language;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class LanguageListener
 {
+    const ONE_YEAR = 31536000;
+
     /**
-     * @var Session
+     * @var ContainerInterface
      */
-    private $session;
+    private $container;
 
-    /** @var Language
-     */
-    private $language;
-
-
-    public function __construct(Language $language)
+    public function __construct(ContainerInterface $container)
     {
-        $this->language = $language;
-    }
-
-    public function setSession(Session $session)
-    {
-        $this->session = $session;
+        $this->container = $container;
     }
 
     public function setLocale(GetResponseEvent $event)
@@ -38,16 +31,31 @@ class LanguageListener
         $request = $event->getRequest();
 
         if ($locale = $request->attributes->get('_locale')) {
-            if ($this->language->hasAvailableLocales($locale)) {
-                $request->getSession()->set('_locale', $locale);
+            if ($this->getLanguage()->hasAvailableLocales($locale)) {
+                $redirectResponse = new RedirectResponse($this->getHomepageRoute());
+
+                $cookie = new Cookie('_locale', $locale, time() + self::ONE_YEAR);
+                $redirectResponse->headers->setCookie($cookie);
+
+                $event->setResponse($redirectResponse);
             }
         } else {
-            $defaultLocale = $request->getPreferredLanguage($this->language->getAvailableLocales());
+            $defaultLocale = $request->getPreferredLanguage($this->getLanguage()->getAvailableLocales());
 
             if (!$this->isAdminUrl($request->getRequestUri())) {
-                $request->setLocale($request->getSession()->get('_locale', $defaultLocale));
+                $request->setLocale($request->cookies->get('_locale', $defaultLocale));
             }
         }
+    }
+
+    private function getHomepageRoute()
+    {
+        return $this->container->get('router')->generate('purethink_cms_homepage');
+    }
+
+    private function getLanguage()
+    {
+        return $this->container->get('app.language_service');
     }
 
     private function isAdminUrl($uri)

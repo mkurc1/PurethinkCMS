@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Purethink\CoreBundle\Entity\Media;
 
 /**
  * @ORM\Table(name="language")
@@ -38,6 +39,14 @@ class Language
      * @ORM\Column(type="boolean")
      */
     private $enabled = false;
+
+    /**
+     * @var Media
+     *
+     * @ORM\ManyToOne(targetEntity="Purethink\CoreBundle\Entity\Media", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $media;
 
 
     public function __construct($name = null, $alias = null)
@@ -133,5 +142,23 @@ class Language
     public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * @return Media
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param Media $media
+     * @return Language
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+        return $this;
     }
 }

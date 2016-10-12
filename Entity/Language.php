@@ -19,9 +19,11 @@ class Language
     use SoftDeleteableEntity;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -47,6 +49,14 @@ class Language
      * @ORM\JoinColumn(nullable=true)
      */
     protected $media;
+
+    /**
+     * @var int
+     *
+     * @Gedmo\SortablePosition
+     * @ORM\Column(type="integer")
+     */
+    private $position;
 
 
     public function __construct($name = null, $alias = null)
@@ -159,6 +169,24 @@ class Language
     public function setMedia($media)
     {
         $this->media = $media;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param mixed $position
+     * @return Language
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
         return $this;
     }
 }

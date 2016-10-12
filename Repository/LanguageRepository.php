@@ -12,7 +12,7 @@ class LanguageRepository extends EntityRepository
             ->addSelect('m')
             ->leftJoin('a.media', 'm')
             ->where('a.enabled = true')
-            ->orderBy('a.name');
+            ->orderBy('a.position');
 
         return $qb->getQuery()->getResult();
     }

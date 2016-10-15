@@ -20,8 +20,11 @@ class ComponentBlock extends AbstractBlock
      */
     protected $em;
 
-    /** @var RequestStack */
+    /**
+     * @var RequestStack
+     */
     protected $requestStack;
+
 
     /**
      * @param string                 $name
@@ -68,6 +71,9 @@ class ComponentBlock extends AbstractBlock
     private function getComponent($slug)
     {
         $locale = $this->requestStack->getCurrentRequest()->getLocale();
+        if (!$this->em->getFilters()->isEnabled('oneLocale')) {
+            $this->em->getFilters()->enable('oneLocale')->setParameter('locale', $locale);
+        }
 
         return $this->em
             ->getRepository('PurethinkCMSBundle:ComponentHasElement')

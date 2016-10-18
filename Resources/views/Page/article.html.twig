@@ -1,6 +1,19 @@
 {% extends "PurethinkCMSBundle:Page:layout.html.twig" %}
 
-{% set meta = article %}
+{% block keywords %}
+    {{ article.keyword|default(parent()) }}
+{% endblock keywords %}
+
+{% block description %}
+    {{ article.description|default(parent()) }}
+{% endblock description %}
+
+{% block title %}
+    {% if meta.addTitleToSubPages and meta.title is not empty %}
+        {{ meta.title }} »
+    {% endif %}
+    {{ article.title|default(parent()) }}
+{% endblock title %}
 
 {% block body %}
     {{ parent() }}

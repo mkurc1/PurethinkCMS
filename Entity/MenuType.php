@@ -23,28 +23,22 @@ class MenuType
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=128)
      * @Assert\NotNull()
      * @Assert\Length(max="128")
      */
-    private $name;
+    protected $name;
 
     /**
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(length=128, unique=true)
      */
-    private $slug;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(max="255")
-     */
-    private $description;
+    protected $slug;
 
     /**
      * @var ArrayCollection
@@ -112,29 +106,6 @@ class MenuType
     public function getSlug()
     {
         return $this->slug;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return MenuType
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**

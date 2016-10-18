@@ -1,0 +1,4 @@
+knp_paginator:
+    page_range: 10
+    template:
+        pagination: PurethinkCMSBundle:Pagination:sliding.html.twig

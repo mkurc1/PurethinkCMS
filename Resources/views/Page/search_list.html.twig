@@ -7,14 +7,18 @@
         <div class="container">
             <div class="search-result">
                 <div class="page-header">
-                    <h3>Znalezione pozycje - {{ entities|length }}</h3>
+                    <h3>Znalezione pozycje: {{ pagination.totalItemCount }}</h3>
                 </div>
 
                 <ul>
-                {% for entity in entities %}
+                {% for entity in pagination.items %}
                     <li><a href="{{ path('purethink_cms_article', {'slug': entity.slug}) }}">{{ entity }}</a></li>
                 {% endfor %}
                 </ul>
+
+                <div class="text-center">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             </div>
         </div>
     </div>

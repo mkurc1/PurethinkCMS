@@ -34,6 +34,7 @@
         "doctrine/data-fixtures": "v1.1.1",
         "stof/doctrine-extensions-bundle": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^1.1",
+        "knplabs/knp-paginator-bundle": "^2.5",
         "mkurc1/purethink-core-bundle" : "dev-master"
     }
 }

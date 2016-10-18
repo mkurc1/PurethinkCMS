@@ -22,19 +22,19 @@ class PageController extends Controller
 
     public function searchListAction(Request $request)
     {
-        $locale = $request->getLocale();
-
         /** @var Site $meta */
         $meta = $this->getMetadata();
 
-        if ($search = $request->query->get('query')) {
-            $entities = $this->getArticleRepository()
-                ->searchResults($locale, $search);
-        } else {
-            $entities = null;
-        }
+        $search = $request->query->get('query', '');
+        $page = $request->query->getInt('page', 1);
 
-        return $this->render('PurethinkCMSBundle:Page:searchList.html.twig', compact('meta', 'entities'));
+        $query = $this->getArticleRepository()
+            ->searchResultsQuery($request->getLocale(), $search);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($query, $page);
+
+        return $this->render('PurethinkCMSBundle:Page:search_list.html.twig', compact('meta', 'pagination'));
     }
 
     public function contactAction(Request $request)

@@ -7,7 +7,7 @@ use Purethink\CMSBundle\Entity\Article;
 
 class ArticleRepository extends EntityRepository
 {
-    public function searchResults($locale, $search)
+    public function searchResultsQuery($locale, $search)
     {
         $qb = $this->createQueryBuilder('a')
             ->addSelect('t')
@@ -18,7 +18,7 @@ class ArticleRepository extends EntityRepository
             ->setParameter('locale', $locale)
             ->setParameter('search', '%' . $search . '%');
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery();
     }
 
     public function articleBySlug($slug)

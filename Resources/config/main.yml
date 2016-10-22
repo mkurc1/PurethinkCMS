@@ -1,3 +1,10 @@
+doctrine:
+    orm:
+        dql:
+            datetime_functions:
+                YEAR: DoctrineExtensions\Query\Mysql\Year
+                MONTH: DoctrineExtensions\Query\Mysql\Month
+
 knp_paginator:
     page_range: 10
     template:

@@ -12,12 +12,20 @@ use Purethink\CMSBundle\Entity\Site;
 
 class PageController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         /** @var Site $meta */
         $meta = $this->getMetadata();
 
-        return $this->render('PurethinkCMSBundle:Page:index.html.twig', compact('meta'));
+        $page = $request->query->getInt('page', 1);
+
+        $query = $this->getArticleRepository()
+            ->getArticlesQuery();
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($query, $page);
+
+        return $this->render('PurethinkCMSBundle:Page:index.html.twig', compact('meta', 'pagination'));
     }
 
     public function searchListAction(Request $request)
@@ -35,6 +43,22 @@ class PageController extends Controller
         $pagination = $paginator->paginate($query, $page);
 
         return $this->render('PurethinkCMSBundle:Page:search_list.html.twig', compact('meta', 'pagination'));
+    }
+
+    public function archiveAction(Request $request, int $year, int $month)
+    {
+        /** @var Site $meta */
+        $meta = $this->getMetadata();
+
+        $page = $request->query->getInt('page', 1);
+
+        $query = $this->getArticleRepository()
+            ->getArticlesQuery($year, $month);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($query, $page);
+
+        return $this->render('PurethinkCMSBundle:Page:archive.html.twig', compact('meta', 'pagination'));
     }
 
     public function contactAction(Request $request)

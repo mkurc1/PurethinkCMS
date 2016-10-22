@@ -8,6 +8,11 @@ purethink_cms_search:
     defaults: { _controller: 'PurethinkCMSBundle:Page:searchList' }
     methods: [GET]
 
+purethink_cms_archive:
+    path: /{year}/{month}
+    defaults: { _controller: 'PurethinkCMSBundle:Page:archive' }
+    methods: [GET]
+
 purethink_cms_contact:
     path: /contact
     defaults: { _controller: 'PurethinkCMSBundle:Page:contact' }

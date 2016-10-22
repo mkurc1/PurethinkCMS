@@ -7,6 +7,24 @@ use Purethink\CMSBundle\Entity\Article;
 
 class ArticleRepository extends EntityRepository
 {
+    public function getArticlesQuery($year = null, $month = null)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->addSelect('t')
+            ->join('a.translations', 't')
+            ->where('a.published = true')
+            ->orderBy('a.createdAt', 'DESC');
+
+        if (null != $year && null != $month) {
+            $qb->andWhere('YEAR(a.createdAt) = :year')
+                ->setParameter('year', $year)
+                ->andWhere('MONTH(a.createdAt) = :month')
+                ->setParameter('month', $month);
+        }
+
+        return $qb->getQuery();
+    }
+
     public function searchResultsQuery($locale, $search)
     {
         $qb = $this->createQueryBuilder('a')

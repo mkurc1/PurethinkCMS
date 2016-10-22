@@ -2,6 +2,8 @@
 
 namespace Purethink\CMSBundle\Controller;
 
+use Doctrine\ORM\EntityNotFoundException;
+use Knp\Component\Pager\Pagination\AbstractPagination;
 use Purethink\CMSBundle\Entity\Article;
 use Purethink\CMSBundle\Entity\Contact;
 use Purethink\CMSBundle\Form\Type\ContactFormType;
@@ -56,7 +58,12 @@ class PageController extends Controller
             ->getArticlesQuery($year, $month);
 
         $paginator = $this->get('knp_paginator');
+        /** @var AbstractPagination $pagination */
         $pagination = $paginator->paginate($query, $page);
+
+        if ($pagination->getTotalItemCount() === 0) {
+            throw $this->createNotFoundException();
+        }
 
         return $this->render('PurethinkCMSBundle:Page:archive.html.twig', compact('meta', 'pagination'));
     }

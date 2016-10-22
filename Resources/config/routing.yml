@@ -11,6 +11,7 @@ purethink_cms_search:
 purethink_cms_archive:
     path: /{year}/{month}
     defaults: { _controller: 'PurethinkCMSBundle:Page:archive' }
+    requirements: {"year": "\d+", "month": "\d+"}
     methods: [GET]
 
 purethink_cms_contact:

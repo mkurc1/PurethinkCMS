@@ -3,16 +3,22 @@ services:
         class: Purethink\CMSBundle\Block\LanguageBlock
         tags:
             - { name: sonata.block }
-        arguments: ["app.block.language", @templating, @app.language_service]
+        arguments: ["app.block.language", '@templating', '@app.language_service']
 
     app.block.menu:
         class: Purethink\CMSBundle\Block\MenuBlock
         tags:
             - { name: sonata.block }
-        arguments: ["app.block.menu", @templating, @doctrine.orm.entity_manager, @request_stack]
+        arguments: ["app.block.menu", '@templating', '@doctrine.orm.entity_manager', '@request_stack']
 
     app.block.component:
         class: Purethink\CMSBundle\Block\ComponentBlock
         tags:
             - { name: sonata.block }
-        arguments: ["app.block.componet", @templating, @doctrine.orm.entity_manager, @request_stack]
+        arguments: ["app.block.componet", '@templating', '@doctrine.orm.entity_manager', '@request_stack']
+
+    purethink.cms.block.archive:
+        class: Purethink\CMSBundle\Block\ArchiveBlock
+        tags:
+            - { name: sonata.block }
+        arguments: ["purethink.cms.block.archive", '@templating', '@doctrine.orm.entity_manager']

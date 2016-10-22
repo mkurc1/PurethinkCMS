@@ -5,6 +5,10 @@ doctrine:
                 YEAR: DoctrineExtensions\Query\Mysql\Year
                 MONTH: DoctrineExtensions\Query\Mysql\Month
 
+sonata_block:
+    blocks:
+        purethink.cms.block.archive:
+
 knp_paginator:
     page_range: 10
     template:

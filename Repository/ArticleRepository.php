@@ -7,6 +7,20 @@ use Purethink\CMSBundle\Entity\Article;
 
 class ArticleRepository extends EntityRepository
 {
+    public function getMonthsWithArticles()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a.createdAt AS date')
+            ->addSelect('YEAR(a.createdAt) AS HIDDEN year')
+            ->addSelect('MONTH(a.createdAt) AS HIDDEN month')
+            ->where('a.published = true')
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'DESC')
+            ->addOrderBy('month', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function getArticlesQuery($year = null, $month = null)
     {
         $qb = $this->createQueryBuilder('a')

@@ -1,0 +1,7 @@
+<ul>
+    {% for date in archive %}
+        <li>
+            <a href='{{ path('purethink_cms_archive', {'year': date.date|date('Y'), 'month': date.date|date('m')}) }}'>{{ date.date|format_date('LLLL Y')|capitalize }}</a>
+        </li>
+    {% endfor %}
+</ul>

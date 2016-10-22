@@ -42,7 +42,7 @@ class PageController extends Controller
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate($query, $page);
 
-        return $this->render('PurethinkCMSBundle:Page:search_list.html.twig', compact('meta', 'pagination'));
+        return $this->render('PurethinkCMSBundle:Page:search_list.html.twig', compact('meta', 'pagination', 'search'));
     }
 
     public function archiveAction(Request $request, int $year, int $month)

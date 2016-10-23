@@ -3,7 +3,10 @@
 namespace Purethink\CMSBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Purethink\CMSBundle\Entity\Article;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ArticleRepository extends EntityRepository
 {
@@ -21,13 +24,26 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getArticlesQuery($year = null, $month = null)
+    public function getUserArticlesQuery(UserInterface $user) : Query
     {
         $qb = $this->createQueryBuilder('a')
             ->addSelect('t')
             ->join('a.translations', 't')
             ->where('a.published = true')
-            ->orderBy('a.createdAt', 'DESC');
+            ->andWhere('a.user = :user')
+            ->setParameter('user', $user);
+
+        $this->addOrderByCreatedAt($qb);
+
+        return $qb->getQuery();
+    }
+
+    public function getArticlesQuery($year = null, $month = null) : Query
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->addSelect('t')
+            ->join('a.translations', 't')
+            ->where('a.published = true');
 
         if (null != $year && null != $month) {
             $qb->andWhere('YEAR(a.createdAt) = :year')
@@ -36,10 +52,12 @@ class ArticleRepository extends EntityRepository
                 ->setParameter('month', $month);
         }
 
+        $this->addOrderByCreatedAt($qb);
+
         return $qb->getQuery();
     }
 
-    public function searchResultsQuery($locale, $search)
+    public function searchResultsQuery($locale, $search) : Query
     {
         $qb = $this->createQueryBuilder('a')
             ->addSelect('t')
@@ -75,10 +93,11 @@ class ArticleRepository extends EntityRepository
             ->addSelect('at')
             ->join('a.translations', 'at')
             ->where('a.createdAt < :createdAt')
-            ->andWhere('at.slug IS NOT NULL')
-            ->orderBy('a.createdAt', 'DESC')
             ->setParameter('createdAt', $article->getCreatedAt())
-            ->setMaxResults(1);
+            ->andWhere('at.slug IS NOT NULL');
+
+        $this->addOrderByCreatedAt($qb);
+        $qb->setMaxResults(1);
 
         return $qb->getQuery()->getOneOrNullResult();
     }
@@ -89,11 +108,17 @@ class ArticleRepository extends EntityRepository
             ->addSelect('at')
             ->join('a.translations', 'at')
             ->where('a.createdAt > :createdAt')
-            ->andWhere('at.slug IS NOT NULL')
-            ->orderBy('a.createdAt')
             ->setParameter('createdAt', $article->getCreatedAt())
-            ->setMaxResults(1);
+            ->andWhere('at.slug IS NOT NULL');
+
+        $this->addOrderByCreatedAt($qb, 'ASC');
+        $qb->setMaxResults(1);
 
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    private function addOrderByCreatedAt(QueryBuilder $qb, string $order = 'DESC')
+    {
+        $qb->orderBy($qb->getRootAliases()[0] . '.createdAt', $order);
     }
 }

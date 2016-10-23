@@ -68,6 +68,32 @@ class PageController extends Controller
         return $this->render('PurethinkCMSBundle:Page:archive.html.twig', compact('meta', 'pagination'));
     }
 
+    public function authorAction(Request $request, string $username)
+    {
+        $user = $this->get('fos_user.user_manager')->findUserByUsername($username);
+        if (!$user) {
+            throw $this->createNotFoundException();
+        }
+
+        /** @var Site $meta */
+        $meta = $this->getMetadata();
+
+        $page = $request->query->getInt('page', 1);
+
+        $query = $this->getArticleRepository()
+            ->getUserArticlesQuery($user);
+
+        $paginator = $this->get('knp_paginator');
+        /** @var AbstractPagination $pagination */
+        $pagination = $paginator->paginate($query, $page);
+
+        if ($pagination->getTotalItemCount() === 0) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('PurethinkCMSBundle:Page:author.html.twig', compact('meta', 'pagination', 'user'));
+    }
+
     public function contactAction(Request $request)
     {
         /** @var Site $meta */

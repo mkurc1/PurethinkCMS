@@ -14,6 +14,11 @@ purethink_cms_archive:
     requirements: {"year": "\d+", "month": "\d+"}
     methods: [GET]
 
+purethink_cms_author:
+    path: /author/{username}
+    defaults: { _controller: 'PurethinkCMSBundle:Page:author' }
+    methods: [GET]
+
 purethink_cms_contact:
     path: /contact
     defaults: { _controller: 'PurethinkCMSBundle:Page:contact' }

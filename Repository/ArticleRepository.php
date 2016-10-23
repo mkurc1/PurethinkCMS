@@ -68,6 +68,8 @@ class ArticleRepository extends EntityRepository
             ->setParameter('locale', $locale)
             ->setParameter('search', '%' . $search . '%');
 
+        $this->addOrderByCreatedAt($qb);
+
         return $qb->getQuery();
     }
 

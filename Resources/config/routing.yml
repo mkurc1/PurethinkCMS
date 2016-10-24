@@ -14,6 +14,11 @@ purethink_cms_archive:
     requirements: {"year": "\d+", "month": "\d+"}
     methods: [GET]
 
+purethink_cms_tag:
+    path: /tag/{slug}
+    defaults: { _controller: 'PurethinkCMSBundle:Page:tag' }
+    methods: [GET]
+
 purethink_cms_category:
     path: /category/{slug}
     defaults: { _controller: 'PurethinkCMSBundle:Page:category' }

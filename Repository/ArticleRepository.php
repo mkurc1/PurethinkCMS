@@ -7,6 +7,7 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Purethink\CMSBundle\Entity\Article;
 use Purethink\CoreBundle\Entity\Category;
+use Purethink\CoreBundle\Entity\Tag;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ArticleRepository extends EntityRepository
@@ -66,6 +67,21 @@ class ArticleRepository extends EntityRepository
             ->where('a.published = true')
             ->andWhere('a.category = :category')
             ->setParameter('category', $category);
+
+        $this->addOrderByCreatedAt($qb);
+
+        return $qb->getQuery();
+    }
+
+    public function getArticlesWithTagQuery(Tag $tag) : Query
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->addSelect('t')
+            ->join('a.translations', 't')
+            ->join('a.tags', 'ta')
+            ->where('a.published = true')
+            ->andWhere('ta = :tag')
+            ->setParameter('tag', $tag);
 
         $this->addOrderByCreatedAt($qb);
 

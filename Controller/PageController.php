@@ -6,7 +6,9 @@ use Knp\Component\Pager\Pagination\AbstractPagination;
 use Purethink\CMSBundle\Entity\Article;
 use Purethink\CMSBundle\Entity\Contact;
 use Purethink\CMSBundle\Form\Type\ContactFormType;
+use Purethink\CMSBundle\Repository\ArticleRepository;
 use Purethink\CoreBundle\Entity\Repository\CategoryRepository;
+use Purethink\CoreBundle\Entity\Repository\TagRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -66,6 +68,32 @@ class PageController extends Controller
         }
 
         return $this->render('PurethinkCMSBundle:Page:archive.html.twig', compact('meta', 'pagination'));
+    }
+
+    public function tagAction(Request $request, string $slug)
+    {
+        $tag = $this->getTagRepository()->findActiveTagBySlug($slug);
+        if (!$tag) {
+            throw $this->createNotFoundException();
+        }
+
+        /** @var Site $meta */
+        $meta = $this->getMetadata();
+
+        $page = $request->query->getInt('page', 1);
+
+        $query = $this->getArticleRepository()
+            ->getArticlesWithTagQuery($tag);
+
+        $paginator = $this->get('knp_paginator');
+        /** @var AbstractPagination $pagination */
+        $pagination = $paginator->paginate($query, $page);
+
+        if ($pagination->getTotalItemCount() === 0) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('PurethinkCMSBundle:Page:tag.html.twig', compact('meta', 'pagination', 'tag'));
     }
 
     public function categoryAction(Request $request, string $slug)
@@ -194,7 +222,7 @@ class PageController extends Controller
             ->getSite();
     }
 
-    protected function getArticleRepository()
+    protected function getArticleRepository() : ArticleRepository
     {
         return $this->getDoctrine()->getRepository('PurethinkCMSBundle:Article');
     }
@@ -202,5 +230,10 @@ class PageController extends Controller
     protected function getCategoryRepository() : CategoryRepository
     {
         return $this->getDoctrine()->getRepository('PurethinkCoreBundle:Category');
+    }
+
+    protected function getTagRepository() : TagRepository
+    {
+        return $this->getDoctrine()->getRepository('PurethinkCoreBundle:Tag');
     }
 }

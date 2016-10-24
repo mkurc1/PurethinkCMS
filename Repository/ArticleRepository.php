@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Purethink\CMSBundle\Entity\Article;
+use Purethink\CoreBundle\Entity\Category;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ArticleRepository extends EntityRepository
@@ -51,6 +52,20 @@ class ArticleRepository extends EntityRepository
                 ->andWhere('MONTH(a.createdAt) = :month')
                 ->setParameter('month', $month);
         }
+
+        $this->addOrderByCreatedAt($qb);
+
+        return $qb->getQuery();
+    }
+
+    public function getArticlesWithCategoryQuery(Category $category) : Query
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->addSelect('t')
+            ->join('a.translations', 't')
+            ->where('a.published = true')
+            ->andWhere('a.category = :category')
+            ->setParameter('category', $category);
 
         $this->addOrderByCreatedAt($qb);
 

@@ -2,11 +2,11 @@
 
 namespace Purethink\CMSBundle\Controller;
 
-use Doctrine\ORM\EntityNotFoundException;
 use Knp\Component\Pager\Pagination\AbstractPagination;
 use Purethink\CMSBundle\Entity\Article;
 use Purethink\CMSBundle\Entity\Contact;
 use Purethink\CMSBundle\Form\Type\ContactFormType;
+use Purethink\CoreBundle\Entity\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -66,6 +66,32 @@ class PageController extends Controller
         }
 
         return $this->render('PurethinkCMSBundle:Page:archive.html.twig', compact('meta', 'pagination'));
+    }
+
+    public function categoryAction(Request $request, string $slug)
+    {
+        $category = $this->getCategoryRepository()->findActiveCategoryBySlug($slug);
+        if (!$category) {
+            throw $this->createNotFoundException();
+        }
+
+        /** @var Site $meta */
+        $meta = $this->getMetadata();
+
+        $page = $request->query->getInt('page', 1);
+
+        $query = $this->getArticleRepository()
+            ->getArticlesWithCategoryQuery($category);
+
+        $paginator = $this->get('knp_paginator');
+        /** @var AbstractPagination $pagination */
+        $pagination = $paginator->paginate($query, $page);
+
+        if ($pagination->getTotalItemCount() === 0) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('PurethinkCMSBundle:Page:category.html.twig', compact('meta', 'pagination', 'category'));
     }
 
     public function authorAction(Request $request, string $username)
@@ -171,5 +197,10 @@ class PageController extends Controller
     protected function getArticleRepository()
     {
         return $this->getDoctrine()->getRepository('PurethinkCMSBundle:Article');
+    }
+
+    protected function getCategoryRepository() : CategoryRepository
+    {
+        return $this->getDoctrine()->getRepository('PurethinkCoreBundle:Category');
     }
 }

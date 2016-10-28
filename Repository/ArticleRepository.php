@@ -150,6 +150,14 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    public function countArticles() : int
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     private function addOrderByCreatedAt(QueryBuilder $qb, string $order = 'DESC')
     {
         $qb->orderBy($qb->getRootAliases()[0] . '.createdAt', $order);

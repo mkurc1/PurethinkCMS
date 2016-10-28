@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="contact")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Purethink\CMSBundle\Repository\ContactRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Contact implements SoftDeleteable

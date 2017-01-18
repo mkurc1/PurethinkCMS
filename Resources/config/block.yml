@@ -15,7 +15,7 @@ services:
         class: Purethink\CMSBundle\Block\ComponentBlock
         tags:
             - { name: sonata.block }
-        arguments: ["app.block.componet", '@templating', '@doctrine.orm.entity_manager', '@request_stack']
+        arguments: ["app.block.componet", '@templating', '@doctrine.orm.entity_manager', '@request_stack', '@translator']
 
     purethink.cms.block.archive:
         class: Purethink\CMSBundle\Block\ArchiveBlock

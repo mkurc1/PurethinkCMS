@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ComponentBlock extends AbstractBlock
 {
@@ -25,19 +26,26 @@ class ComponentBlock extends AbstractBlock
      */
     protected $requestStack;
 
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
 
     /**
      * @param string                 $name
      * @param EngineInterface        $templating
      * @param EntityManagerInterface $em
      * @param RequestStack           $requestStack
+     * @param TranslatorInterface    $translator
      */
-    public function __construct($name, EngineInterface $templating, EntityManagerInterface $em, RequestStack $requestStack)
+    public function __construct($name, EngineInterface $templating, EntityManagerInterface $em, RequestStack $requestStack, TranslatorInterface $translator)
     {
         parent::__construct($name, $templating);
 
         $this->em = $em;
         $this->requestStack = $requestStack;
+        $this->translator = $translator;
     }
 
     /**
@@ -58,8 +66,11 @@ class ComponentBlock extends AbstractBlock
      */
     public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
+        $locale = $this->requestStack->getCurrentRequest()->getLocale();
+        $this->translator->setLocale($locale);
+
         return $this->renderResponse($blockContext->getTemplate(), [
-            'entities' => $this->getComponent($blockContext->getSetting('slug'))
+            'entities' => $this->getComponent($locale, $blockContext->getSetting('slug'))
         ],
             $response)->setTtl(self::CACHE_TIME);
     }
@@ -68,9 +79,8 @@ class ComponentBlock extends AbstractBlock
      * @param string $slug
      * @return array
      */
-    private function getComponent($slug)
+    private function getComponent($locale, $slug)
     {
-        $locale = $this->requestStack->getCurrentRequest()->getLocale();
         if (!$this->em->getFilters()->isEnabled('oneLocale')) {
             $this->em->getFilters()->enable('oneLocale')->setParameter('locale', $locale);
         }

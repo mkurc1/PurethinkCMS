@@ -33,11 +33,11 @@ class ComponentBlock extends AbstractBlock
 
 
     /**
-     * @param string                 $name
-     * @param EngineInterface        $templating
+     * @param string $name
+     * @param EngineInterface $templating
      * @param EntityManagerInterface $em
-     * @param RequestStack           $requestStack
-     * @param TranslatorInterface    $translator
+     * @param RequestStack $requestStack
+     * @param TranslatorInterface $translator
      */
     public function __construct($name, EngineInterface $templating, EntityManagerInterface $em, RequestStack $requestStack, TranslatorInterface $translator)
     {
@@ -55,22 +55,24 @@ class ComponentBlock extends AbstractBlock
     {
         $resolver->setDefaults([
             'template' => null,
-            'slug'     => null
+            'slug' => null
         ]);
     }
 
     /**
      * @param BlockContextInterface $blockContext
-     * @param Response              $response
+     * @param Response $response
      * @return Response
      */
     public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
+        $settings = $blockContext->getSettings();
         $locale = $this->requestStack->getCurrentRequest()->getLocale();
         $this->translator->setLocale($locale);
 
         return $this->renderResponse($blockContext->getTemplate(), [
-            'entities' => $this->getComponent($locale, $blockContext->getSetting('slug'))
+            'entities' => $this->getComponent($locale, $settings['slug']),
+            'settings' => $settings
         ],
             $response)->setTtl(self::CACHE_TIME);
     }

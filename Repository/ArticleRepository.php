@@ -26,7 +26,7 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getUserArticlesQuery(UserInterface $user) : Query
+    public function getUserArticlesQuery(UserInterface $user): Query
     {
         $qb = $this->createQueryBuilder('a')
             ->addSelect('t')
@@ -40,7 +40,7 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery();
     }
 
-    public function getArticlesQuery($year = null, $month = null) : Query
+    public function getArticlesQuery($year = null, $month = null): Query
     {
         $qb = $this->createQueryBuilder('a')
             ->addSelect('t')
@@ -59,7 +59,7 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery();
     }
 
-    public function getArticlesWithCategoryQuery(Category $category) : Query
+    public function getArticlesWithCategoryQuery(Category $category): Query
     {
         $qb = $this->createQueryBuilder('a')
             ->addSelect('t')
@@ -73,7 +73,7 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery();
     }
 
-    public function getArticlesWithTagQuery(Tag $tag) : Query
+    public function getArticlesWithTagQuery(Tag $tag): Query
     {
         $qb = $this->createQueryBuilder('a')
             ->addSelect('t')
@@ -88,7 +88,7 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery();
     }
 
-    public function searchResultsQuery($locale, $search) : Query
+    public function searchResultsQuery($locale, $search): Query
     {
         $qb = $this->createQueryBuilder('a')
             ->addSelect('t')
@@ -129,6 +129,7 @@ class ArticleRepository extends EntityRepository
             ->setParameter('createdAt', $article->getCreatedAt())
             ->andWhere('at.slug IS NOT NULL');
 
+        $this->addCategoryFilter($qb, $article->getCategory());
         $this->addOrderByCreatedAt($qb);
         $qb->setMaxResults(1);
 
@@ -144,13 +145,22 @@ class ArticleRepository extends EntityRepository
             ->setParameter('createdAt', $article->getCreatedAt())
             ->andWhere('at.slug IS NOT NULL');
 
+        $this->addCategoryFilter($qb, $article->getCategory());
         $this->addOrderByCreatedAt($qb, 'ASC');
         $qb->setMaxResults(1);
 
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-    public function countArticles() : int
+    protected function addCategoryFilter(QueryBuilder $qb, Category $category = null)
+    {
+        if (null !== $category) {
+            $qb->andWhere($qb->getRootAliases()[0] . '.category = :category')
+                ->setParameter('category', $category);
+        }
+    }
+
+    public function countArticles(): int
     {
         return $this->createQueryBuilder('a')
             ->select('COUNT(a)')

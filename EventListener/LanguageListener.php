@@ -34,7 +34,7 @@ class LanguageListener
             if ($this->getLanguage()->hasAvailableLocales($locale)) {
                 $redirectResponse = new RedirectResponse($this->getHomepageRoute());
 
-                $cookie = new Cookie('_locale', $locale, time() + self::ONE_YEAR);
+                $cookie = new Cookie('_locale', $locale, time() + self::ONE_YEAR, '/', $request->getHost());
                 $redirectResponse->headers->setCookie($cookie);
 
                 $event->setResponse($redirectResponse);

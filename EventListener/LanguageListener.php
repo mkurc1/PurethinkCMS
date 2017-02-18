@@ -15,7 +15,7 @@ class LanguageListener
     /**
      * @var ContainerInterface
      */
-    private $container;
+    protected $container;
 
     public function __construct(ContainerInterface $container)
     {
@@ -48,17 +48,17 @@ class LanguageListener
         }
     }
 
-    private function getHomepageRoute()
+    protected function getHomepageRoute()
     {
         return $this->container->get('router')->generate('purethink_cms_homepage');
     }
 
-    private function getLanguage()
+    protected function getLanguage()
     {
         return $this->container->get('app.language_service');
     }
 
-    private function isAdminUrl($uri)
+    protected function isAdminUrl($uri)
     {
         return preg_match('/admin\/purethink/', $uri);
     }

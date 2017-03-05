@@ -104,6 +104,14 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
      */
     protected $category;
 
+    /**
+     * @var Article
+     *
+     * @ORM\OneToMany(targetEntity="Purethink\CMSBundle\Entity\ArticleSource", mappedBy="article", orphanRemoval=true, cascade={"persist"})
+     * @Assert\Valid()
+     */
+    protected $sources;
+
     protected $translations;
 
 
@@ -143,6 +151,15 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
     public function getViews()
     {
         return $this->getView();
+    }
+
+    public function getFirstSource()
+    {
+        if ($this->getSources()->count() > 0) {
+            return $this->getSources()->first();
+        }
+
+        return null;
     }
 
     /**
@@ -212,6 +229,7 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
     {
         $this->translations = new ArrayCollection();
         $this->componentHasArticle = new ArrayCollection();
+        $this->sources = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->setView(new ArticleView());
 
@@ -383,5 +401,40 @@ class Article implements MetadataInterface, ArticleViewInterface, SoftDeleteable
     {
         $this->category = $category;
         return $this;
+    }
+
+    /**
+     * Add source
+     *
+     * @param ArticleSource $source
+     *
+     * @return Article
+     */
+    public function addSource(ArticleSource $source)
+    {
+        $source->setArticle($this);
+        $this->sources[] = $source;
+
+        return $this;
+    }
+
+    /**
+     * Remove source
+     *
+     * @param ArticleSource $source
+     */
+    public function removeSource(ArticleSource $source)
+    {
+        $this->sources->removeElement($source);
+    }
+
+    /**
+     * Get sources
+     *
+     * @return Collection
+     */
+    public function getSources()
+    {
+        return $this->sources;
     }
 }

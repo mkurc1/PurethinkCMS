@@ -11,7 +11,7 @@ class MenuActionRepository extends MenuRepository
             ->join('a.translations', 'at', 'WITH', 'at.locale = :locale')
             ->where('a.published = true')
             ->andWhere('t.slug = :typeSlug')
-            ->groupBy('a.id')
+            ->groupBy('a')
             ->setParameter('typeSlug', $typeSlug)
             ->setParameter('locale', $locale);
 

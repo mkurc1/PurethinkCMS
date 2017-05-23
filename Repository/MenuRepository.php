@@ -29,7 +29,7 @@ class MenuRepository extends EntityRepository
             ->andWhere('a IN (:menus)')
             ->andWhere('a.menu IS NULL')
             ->orderBy('a.position')
-            ->groupBy('a', 'at')
+            ->groupBy('a.id')
             ->setParameter('menus', $menus)
             ->setParameter('locale', $locale);
 

@@ -42,7 +42,7 @@ class Contact implements SoftDeleteable
      *
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\Email(strict="true")
      * @Assert\Length(min="3", max="255")
      */
     protected $email;
